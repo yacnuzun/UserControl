@@ -23,7 +23,7 @@ namespace Business.Concrete
             _userDal.Add(user);
         }
 
-        public User GetByUserName(string email)
+        public User GetByEmail(string email)
         {
             return _userDal.Get(u=>u.Email == email);
         }

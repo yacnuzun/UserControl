@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Security.Jwt
 {
-    internal class JwtHelper : ITokenHelper
+    public class JwtHelper : ITokenHelper
     {
         public IConfiguration Configuration { get; }
         public TokenOptions _tokenOptions;
