@@ -1,5 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
+using Business.DepencyResolvers.Autofac;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
@@ -32,13 +35,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
     });
-builder.Services.AddSingleton<IUserDal, EfUserDal>();
-builder.Services.AddSingleton<IUserService, UserManager>();
-builder.Services.AddSingleton<IAuthService, AutManager>();
-builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
+//builder.Services.AddSingleton<IUserDal, EfUserDal>();
+//builder.Services.AddSingleton<IUserService, UserManager>();
+//builder.Services.AddSingleton<IAuthService, AutManager>();
+//builder.Services.AddSingleton<ITokenHelper, JwtHelper>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBusinessModule()));
 
 var app = builder.Build();
 
